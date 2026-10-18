@@ -1,0 +1,176 @@
+#include <avr/io.h>
+#define F_CPU 1000000
+#include <util/delay.h>
+
+unsigned int instruction[256] = {
+	0xF06F, 0xF023, 0x4620, 0x6661, 0x603B, 00xF023, 0xF035, 0x1231, 0x1134, 0xF452, 0x4323, 0xE222, 0x6441, 0x5241, 0x2230, 0x8441, 0x7422, 0xD242, 0x0153, 0x2200, 0x4610, 0x6661, 0x4630, 0x6661, 0xA115, 0xF661, 0x7610, 0xC336, 0x7372, 0x4670, 0x6661, 0xF661, 0x7630, 0x9333, 0xF661, 0x7630, 0x2230, 0x3131, 0x6113, 0x20F0, 0x1000,
+ 0x0000, 0x0000, 0x0000,  0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
+unsigned char regArr[16];
+// 0 -> zero lol
+// 1 -> t0
+// 2 -> t1
+// 3 -> t2
+// 4 -> t3
+// 5 -> t4
+// 6 -> sp
+int controlMem[16] = {0x902, 0x904, 0x001, 0x036,
+	0x444, 0x026, 0x506, 0x784,
+	0x50e, 0x908, 0x502, 0x906,
+0x500, 0x900, 0x50c, 0x504};
+
+int main(void)
+{
+	MCUCSR |= (1 << JTD);
+	MCUCSR |= (1 << JTD);
+
+	DDRA = 0X00;
+	DDRB = 0xFF;
+	DDRC = 0xFF;
+	DDRD = 0xFF;
+
+	for (int i = 1; i < 16; i++)
+	{
+		regArr[i] = i;
+	}
+	regArr[0] = 0;
+	regArr[6] = 15;
+
+	unsigned int pc = 0x00;
+
+	int prevclk = 0;
+	int currclk = 0;
+	int reset = 0;
+	int regcnt = 0;
+	/* Replace with your application code */
+	while (1)
+	{
+		prevclk = currclk;
+		// char b = PINA;
+		unsigned char x = PINA;
+		currclk = (x & 0b00000001);
+		reset = (x & 0b00000010) >> 1;
+		unsigned int z = (x & 0b00000100) >> 2;
+		unsigned int wb = (x & 0b01111000) >> 3;
+		unsigned int showreg = (x & 0b10000000) >> 7;
+		unsigned int instruc_no = instruction[pc];
+		unsigned int operation = instruc_no >> 12;
+		unsigned char ALUop = (controlMem[operation] & 0b00001110) >> 1;
+		unsigned char jump = (controlMem[operation] & 0b00000001);
+		unsigned char bneq = (controlMem[operation] & 0b00010000) >> 4;
+		unsigned char branch = (controlMem[operation] & 0b00100000) >> 5;
+		unsigned char memWrite = (controlMem[operation] & 0b01000000) >> 6;
+		unsigned char memRead = (controlMem[operation] & 0b10000000) >> 7;
+
+		unsigned char regWrite = ((controlMem[operation]) >> 8) & 0b00000001;
+		unsigned char memtoReg = (((controlMem[operation]) >> 8) & 0b00000010) >> 1;
+		unsigned char ALUsrc = (((controlMem[operation]) >> 8) & 0b00000100) >> 2;
+		unsigned char regDst = (((controlMem[operation]) >> 8) & 0b00001000) >> 3;
+		// int b = PINB;
+		// int muxout = b%16;
+		// int pnA=PINA;
+		unsigned int reg1 = (instruc_no >> 8) & 0b00001111;
+		unsigned int reg2 = (instruc_no >> 4) & 0b000000001111;
+		unsigned int dstReg = (instruc_no) % 16;
+		// int d = PIND;
+		// int reg1 = pnA%16;
+		// int flg = PINA;
+		// prevclk = currclk;
+		// currclk = (flg & 0b00000010)>>1;
+		// regwrite = (flg & 0b00000001);
+		// showreg = (flg & 0b00000100) >> 2;
+		// showreg=0;
+		// reset = (flg & 0b1000)>>3;
+		// reset=0;
+		// int wb = flg >> 4;
+		unsigned int mux1out;
+		if (regDst == 1)
+		{
+			mux1out = dstReg;
+		}
+		else
+		{
+			mux1out = reg2;
+		}
+		unsigned int mux2out;
+		if (ALUsrc == 1)
+		{
+			mux2out = dstReg;
+		}
+		else
+		{
+			mux2out = regArr[reg2];
+		}
+
+		if (showreg == 1)
+		{
+			// int in1 = PINB & 0b00001111;
+			PORTC = regArr[regcnt];
+			regcnt++;
+			if (regcnt == 6)
+			regcnt = 0;
+			_delay_ms(1000);
+		}
+		else
+		{
+
+			// PORTC = ( (regArr[reg2]<< 4) | regArr[reg1]%16)%256;
+			PORTC = ((mux2out << 4) | regArr[reg1] % 16) % 256;
+			unsigned char dk = ALUop;
+			dk |= (((memWrite) << 3) | ((memRead) << 4) | ((memtoReg) << 5));
+			PORTD = dk;
+			unsigned char b = regArr[reg2];
+			// PORTB4= b & (1);
+			PORTB = (b << 4);
+
+			if (prevclk == 0 && currclk == 1 && regWrite)
+			{
+				regArr[mux1out] = wb;
+			}
+			//}
+		}
+		unsigned int beq = (bneq & (~z)) | (branch & z);
+		unsigned int shmt = dstReg;
+		// shmt = (b & 0x0f);
+		unsigned int jmp_addr = 0;
+		jmp_addr = (instruc_no >> 4) & 0x0FF;
+		// int pc = a + 1;
+		if (reset == 1)
+		{
+			pc = 0x00;
+		}
+		else
+		{
+			if (prevclk == 1 && currclk == 0)
+			{
+				if (jump == 1)
+				{
+					pc = jmp_addr;
+				}
+				else if (beq == 1)
+				{
+					pc = pc + shmt;
+				}
+				else
+				{
+					pc++;
+				}
+			}
+		}
+
+		_delay_ms(10);
+	}
+}

@@ -1,0 +1,649 @@
+
+MainControl.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002f2  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000220  00800060  000002f2  00000386  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000010  00800280  00800280  000005a6  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000005a6  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000005d8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000020  00000000  00000000  00000614  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000003a5  00000000  00000000  00000634  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000014b  00000000  00000000  000009d9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000018f  00000000  00000000  00000b24  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000034  00000000  00000000  00000cb4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002a1  00000000  00000000  00000ce8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000651  00000000  00000000  00000f89  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000038  00000000  00000000  000015da  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	12 e0       	ldi	r17, 0x02	; 2
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e2 ef       	ldi	r30, 0xF2	; 242
+  68:	f2 e0       	ldi	r31, 0x02	; 2
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 38       	cpi	r26, 0x80	; 128
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	22 e0       	ldi	r18, 0x02	; 2
+  78:	a0 e8       	ldi	r26, 0x80	; 128
+  7a:	b2 e0       	ldi	r27, 0x02	; 2
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a0 39       	cpi	r26, 0x90	; 144
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 49 00 	call	0x92	; 0x92 <main>
+  8a:	0c 94 77 01 	jmp	0x2ee	; 0x2ee <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <main>:
+	0x444, 0x026, 0x506, 0x784,
+	0x50e, 0x908, 0x502, 0x906,
+0x500, 0x900, 0x50c, 0x504};
+
+int main(void)
+{
+  92:	cf 93       	push	r28
+  94:	df 93       	push	r29
+  96:	cd b7       	in	r28, 0x3d	; 61
+  98:	de b7       	in	r29, 0x3e	; 62
+  9a:	2e 97       	sbiw	r28, 0x0e	; 14
+  9c:	0f b6       	in	r0, 0x3f	; 63
+  9e:	f8 94       	cli
+  a0:	de bf       	out	0x3e, r29	; 62
+  a2:	0f be       	out	0x3f, r0	; 63
+  a4:	cd bf       	out	0x3d, r28	; 61
+	MCUCSR |= (1 << JTD);
+  a6:	84 b7       	in	r24, 0x34	; 52
+  a8:	80 68       	ori	r24, 0x80	; 128
+  aa:	84 bf       	out	0x34, r24	; 52
+	MCUCSR |= (1 << JTD);
+  ac:	84 b7       	in	r24, 0x34	; 52
+  ae:	80 68       	ori	r24, 0x80	; 128
+  b0:	84 bf       	out	0x34, r24	; 52
+
+	DDRA = 0X00;
+  b2:	1a ba       	out	0x1a, r1	; 26
+	DDRB = 0xFF;
+  b4:	8f ef       	ldi	r24, 0xFF	; 255
+  b6:	87 bb       	out	0x17, r24	; 23
+	DDRC = 0xFF;
+  b8:	84 bb       	out	0x14, r24	; 20
+	DDRD = 0xFF;
+  ba:	81 bb       	out	0x11, r24	; 17
+  bc:	a1 e8       	ldi	r26, 0x81	; 129
+  be:	b2 e0       	ldi	r27, 0x02	; 2
+  c0:	81 e0       	ldi	r24, 0x01	; 1
+
+	for (int i = 1; i < 16; i++)
+	{
+		regArr[i] = i;
+  c2:	8d 93       	st	X+, r24
+  c4:	8f 5f       	subi	r24, 0xFF	; 255
+	DDRA = 0X00;
+	DDRB = 0xFF;
+	DDRC = 0xFF;
+	DDRD = 0xFF;
+
+	for (int i = 1; i < 16; i++)
+  c6:	80 31       	cpi	r24, 0x10	; 16
+  c8:	e1 f7       	brne	.-8      	; 0xc2 <main+0x30>
+	{
+		regArr[i] = i;
+	}
+	regArr[0] = 0;
+  ca:	a0 e8       	ldi	r26, 0x80	; 128
+  cc:	b2 e0       	ldi	r27, 0x02	; 2
+  ce:	1c 92       	st	X, r1
+	regArr[6] = 15;
+  d0:	8f e0       	ldi	r24, 0x0F	; 15
+  d2:	16 96       	adiw	r26, 0x06	; 6
+  d4:	8c 93       	st	X, r24
+	unsigned int pc = 0x00;
+
+	int prevclk = 0;
+	int currclk = 0;
+	int reset = 0;
+	int regcnt = 0;
+  d6:	1a 82       	std	Y+2, r1	; 0x02
+  d8:	19 82       	std	Y+1, r1	; 0x01
+	regArr[6] = 15;
+
+	unsigned int pc = 0x00;
+
+	int prevclk = 0;
+	int currclk = 0;
+  da:	a0 e0       	ldi	r26, 0x00	; 0
+  dc:	b0 e0       	ldi	r27, 0x00	; 0
+		regArr[i] = i;
+	}
+	regArr[0] = 0;
+	regArr[6] = 15;
+
+	unsigned int pc = 0x00;
+  de:	61 2c       	mov	r6, r1
+  e0:	71 2c       	mov	r7, r1
+		{
+			// int in1 = PINB & 0b00001111;
+			PORTC = regArr[regcnt];
+			regcnt++;
+			if (regcnt == 6)
+			regcnt = 0;
+  e2:	be 87       	std	Y+14, r27	; 0x0e
+  e4:	ad 87       	std	Y+13, r26	; 0x0d
+	/* Replace with your application code */
+	while (1)
+	{
+		prevclk = currclk;
+		// char b = PINA;
+		unsigned char x = PINA;
+  e6:	f9 b2       	in	r15, 0x19	; 25
+		currclk = (x & 0b00000001);
+  e8:	6f 2d       	mov	r22, r15
+  ea:	61 70       	andi	r22, 0x01	; 1
+  ec:	70 e0       	ldi	r23, 0x00	; 0
+		reset = (x & 0b00000010) >> 1;
+  ee:	f1 fa       	bst	r15, 1
+  f0:	ee 27       	eor	r30, r30
+  f2:	e0 f9       	bld	r30, 0
+  f4:	f0 e0       	ldi	r31, 0x00	; 0
+		unsigned int z = (x & 0b00000100) >> 2;
+		unsigned int wb = (x & 0b01111000) >> 3;
+		unsigned int showreg = (x & 0b10000000) >> 7;
+  f6:	df 2c       	mov	r13, r15
+  f8:	dd 1c       	adc	r13, r13
+  fa:	dd 24       	eor	r13, r13
+  fc:	dd 1c       	adc	r13, r13
+		unsigned int instruc_no = instruction[pc];
+  fe:	c3 01       	movw	r24, r6
+ 100:	88 0f       	add	r24, r24
+ 102:	99 1f       	adc	r25, r25
+ 104:	80 58       	subi	r24, 0x80	; 128
+ 106:	9f 4f       	sbci	r25, 0xFF	; 255
+ 108:	dc 01       	movw	r26, r24
+ 10a:	8d 91       	ld	r24, X+
+ 10c:	9c 91       	ld	r25, X
+		unsigned int operation = instruc_no >> 12;
+ 10e:	9c 01       	movw	r18, r24
+ 110:	23 2f       	mov	r18, r19
+ 112:	33 27       	eor	r19, r19
+ 114:	22 95       	swap	r18
+ 116:	2f 70       	andi	r18, 0x0F	; 15
+		unsigned char ALUop = (controlMem[operation] & 0b00001110) >> 1;
+ 118:	22 0f       	add	r18, r18
+ 11a:	33 1f       	adc	r19, r19
+ 11c:	20 5a       	subi	r18, 0xA0	; 160
+ 11e:	3f 4f       	sbci	r19, 0xFF	; 255
+ 120:	d9 01       	movw	r26, r18
+ 122:	4d 91       	ld	r20, X+
+ 124:	5c 91       	ld	r21, X
+		unsigned char bneq = (controlMem[operation] & 0b00010000) >> 4;
+		unsigned char branch = (controlMem[operation] & 0b00100000) >> 5;
+		unsigned char memWrite = (controlMem[operation] & 0b01000000) >> 6;
+		unsigned char memRead = (controlMem[operation] & 0b10000000) >> 7;
+
+		unsigned char regWrite = ((controlMem[operation]) >> 8) & 0b00000001;
+ 126:	e5 2e       	mov	r14, r21
+		unsigned char memtoReg = (((controlMem[operation]) >> 8) & 0b00000010) >> 1;
+		unsigned char ALUsrc = (((controlMem[operation]) >> 8) & 0b00000100) >> 2;
+ 128:	52 fb       	bst	r21, 2
+ 12a:	cc 24       	eor	r12, r12
+ 12c:	c0 f8       	bld	r12, 0
+		unsigned char regDst = (((controlMem[operation]) >> 8) & 0b00001000) >> 3;
+		// int b = PINB;
+		// int muxout = b%16;
+		// int pnA=PINA;
+		unsigned int reg1 = (instruc_no >> 8) & 0b00001111;
+		unsigned int reg2 = (instruc_no >> 4) & 0b000000001111;
+ 12e:	8c 01       	movw	r16, r24
+ 130:	12 95       	swap	r17
+ 132:	02 95       	swap	r16
+ 134:	0f 70       	andi	r16, 0x0F	; 15
+ 136:	01 27       	eor	r16, r17
+ 138:	1f 70       	andi	r17, 0x0F	; 15
+ 13a:	01 27       	eor	r16, r17
+ 13c:	98 01       	movw	r18, r16
+ 13e:	2f 70       	andi	r18, 0x0F	; 15
+ 140:	33 27       	eor	r19, r19
+		unsigned int dstReg = (instruc_no) % 16;
+ 142:	4c 01       	movw	r8, r24
+ 144:	bf e0       	ldi	r27, 0x0F	; 15
+ 146:	8b 22       	and	r8, r27
+ 148:	99 24       	eor	r9, r9
+		// showreg=0;
+		// reset = (flg & 0b1000)>>3;
+		// reset=0;
+		// int wb = flg >> 4;
+		unsigned int mux1out;
+		if (regDst == 1)
+ 14a:	53 fd       	sbrc	r21, 3
+ 14c:	03 c0       	rjmp	.+6      	; 0x154 <main+0xc2>
+		{
+			mux1out = dstReg;
+		}
+		else
+		{
+			mux1out = reg2;
+ 14e:	3c 83       	std	Y+4, r19	; 0x04
+ 150:	2b 83       	std	Y+3, r18	; 0x03
+ 152:	02 c0       	rjmp	.+4      	; 0x158 <main+0xc6>
+		// reset=0;
+		// int wb = flg >> 4;
+		unsigned int mux1out;
+		if (regDst == 1)
+		{
+			mux1out = dstReg;
+ 154:	9c 82       	std	Y+4, r9	; 0x04
+ 156:	8b 82       	std	Y+3, r8	; 0x03
+		else
+		{
+			mux1out = reg2;
+		}
+		unsigned int mux2out;
+		if (ALUsrc == 1)
+ 158:	a1 e0       	ldi	r26, 0x01	; 1
+ 15a:	ca 16       	cp	r12, r26
+ 15c:	49 f0       	breq	.+18     	; 0x170 <main+0xde>
+		{
+			mux2out = dstReg;
+		}
+		else
+		{
+			mux2out = regArr[reg2];
+ 15e:	d9 01       	movw	r26, r18
+ 160:	a0 58       	subi	r26, 0x80	; 128
+ 162:	bd 4f       	sbci	r27, 0xFD	; 253
+ 164:	cc 90       	ld	r12, X
+ 166:	ac 2d       	mov	r26, r12
+ 168:	b0 e0       	ldi	r27, 0x00	; 0
+ 16a:	bc 87       	std	Y+12, r27	; 0x0c
+ 16c:	ab 87       	std	Y+11, r26	; 0x0b
+ 16e:	02 c0       	rjmp	.+4      	; 0x174 <main+0xe2>
+			mux1out = reg2;
+		}
+		unsigned int mux2out;
+		if (ALUsrc == 1)
+		{
+			mux2out = dstReg;
+ 170:	9c 86       	std	Y+12, r9	; 0x0c
+ 172:	8b 86       	std	Y+11, r8	; 0x0b
+		else
+		{
+			mux2out = regArr[reg2];
+		}
+
+		if (showreg == 1)
+ 174:	b1 e0       	ldi	r27, 0x01	; 1
+ 176:	db 12       	cpse	r13, r27
+ 178:	1c c0       	rjmp	.+56     	; 0x1b2 <main+0x120>
+		{
+			// int in1 = PINB & 0b00001111;
+			PORTC = regArr[regcnt];
+ 17a:	89 81       	ldd	r24, Y+1	; 0x01
+ 17c:	9a 81       	ldd	r25, Y+2	; 0x02
+ 17e:	80 58       	subi	r24, 0x80	; 128
+ 180:	9d 4f       	sbci	r25, 0xFD	; 253
+ 182:	dc 01       	movw	r26, r24
+ 184:	8c 91       	ld	r24, X
+ 186:	85 bb       	out	0x15, r24	; 21
+			regcnt++;
+ 188:	29 81       	ldd	r18, Y+1	; 0x01
+ 18a:	3a 81       	ldd	r19, Y+2	; 0x02
+ 18c:	2f 5f       	subi	r18, 0xFF	; 255
+ 18e:	3f 4f       	sbci	r19, 0xFF	; 255
+ 190:	3a 83       	std	Y+2, r19	; 0x02
+ 192:	29 83       	std	Y+1, r18	; 0x01
+			if (regcnt == 6)
+ 194:	26 30       	cpi	r18, 0x06	; 6
+ 196:	31 05       	cpc	r19, r1
+ 198:	11 f4       	brne	.+4      	; 0x19e <main+0x10c>
+			regcnt = 0;
+ 19a:	19 82       	std	Y+1, r1	; 0x01
+ 19c:	1a 82       	std	Y+2, r1	; 0x02
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 19e:	3f e3       	ldi	r19, 0x3F	; 63
+ 1a0:	8d e0       	ldi	r24, 0x0D	; 13
+ 1a2:	93 e0       	ldi	r25, 0x03	; 3
+ 1a4:	31 50       	subi	r19, 0x01	; 1
+ 1a6:	80 40       	sbci	r24, 0x00	; 0
+ 1a8:	90 40       	sbci	r25, 0x00	; 0
+ 1aa:	e1 f7       	brne	.-8      	; 0x1a4 <main+0x112>
+ 1ac:	00 c0       	rjmp	.+0      	; 0x1ae <main+0x11c>
+ 1ae:	00 00       	nop
+ 1b0:	5c c0       	rjmp	.+184    	; 0x26a <main+0x1d8>
+		}
+		else
+		{
+
+			// PORTC = ( (regArr[reg2]<< 4) | regArr[reg1]%16)%256;
+			PORTC = ((mux2out << 4) | regArr[reg1] % 16) % 256;
+ 1b2:	db 84       	ldd	r13, Y+11	; 0x0b
+ 1b4:	dd 0c       	add	r13, r13
+ 1b6:	dd 0c       	add	r13, r13
+ 1b8:	dd 0c       	add	r13, r13
+ 1ba:	dd 0c       	add	r13, r13
+		unsigned char ALUsrc = (((controlMem[operation]) >> 8) & 0b00000100) >> 2;
+		unsigned char regDst = (((controlMem[operation]) >> 8) & 0b00001000) >> 3;
+		// int b = PINB;
+		// int muxout = b%16;
+		// int pnA=PINA;
+		unsigned int reg1 = (instruc_no >> 8) & 0b00001111;
+ 1bc:	89 2f       	mov	r24, r25
+ 1be:	99 27       	eor	r25, r25
+ 1c0:	8f 70       	andi	r24, 0x0F	; 15
+ 1c2:	99 27       	eor	r25, r25
+		}
+		else
+		{
+
+			// PORTC = ( (regArr[reg2]<< 4) | regArr[reg1]%16)%256;
+			PORTC = ((mux2out << 4) | regArr[reg1] % 16) % 256;
+ 1c4:	80 58       	subi	r24, 0x80	; 128
+ 1c6:	9d 4f       	sbci	r25, 0xFD	; 253
+ 1c8:	dc 01       	movw	r26, r24
+ 1ca:	8c 91       	ld	r24, X
+ 1cc:	8f 70       	andi	r24, 0x0F	; 15
+ 1ce:	d8 2a       	or	r13, r24
+ 1d0:	d5 ba       	out	0x15, r13	; 21
+			unsigned char dk = ALUop;
+			dk |= (((memWrite) << 3) | ((memRead) << 4) | ((memtoReg) << 5));
+ 1d2:	46 fb       	bst	r20, 6
+ 1d4:	22 24       	eor	r2, r2
+ 1d6:	20 f8       	bld	r2, 0
+ 1d8:	31 2c       	mov	r3, r1
+ 1da:	61 01       	movw	r12, r2
+ 1dc:	cc 0c       	add	r12, r12
+ 1de:	dd 1c       	adc	r13, r13
+ 1e0:	cc 0c       	add	r12, r12
+ 1e2:	dd 1c       	adc	r13, r13
+ 1e4:	cc 0c       	add	r12, r12
+ 1e6:	dd 1c       	adc	r13, r13
+ 1e8:	47 fb       	bst	r20, 7
+ 1ea:	aa 24       	eor	r10, r10
+ 1ec:	a0 f8       	bld	r10, 0
+ 1ee:	b1 2c       	mov	r11, r1
+ 1f0:	c5 01       	movw	r24, r10
+ 1f2:	82 95       	swap	r24
+ 1f4:	92 95       	swap	r25
+ 1f6:	90 7f       	andi	r25, 0xF0	; 240
+ 1f8:	98 27       	eor	r25, r24
+ 1fa:	80 7f       	andi	r24, 0xF0	; 240
+ 1fc:	98 27       	eor	r25, r24
+ 1fe:	8c 29       	or	r24, r12
+		unsigned int z = (x & 0b00000100) >> 2;
+		unsigned int wb = (x & 0b01111000) >> 3;
+		unsigned int showreg = (x & 0b10000000) >> 7;
+		unsigned int instruc_no = instruction[pc];
+		unsigned int operation = instruc_no >> 12;
+		unsigned char ALUop = (controlMem[operation] & 0b00001110) >> 1;
+ 200:	6a 01       	movw	r12, r20
+ 202:	be e0       	ldi	r27, 0x0E	; 14
+ 204:	cb 22       	and	r12, r27
+ 206:	dd 24       	eor	r13, r13
+ 208:	d5 94       	asr	r13
+ 20a:	c7 94       	ror	r12
+ 20c:	8c 29       	or	r24, r12
+		{
+
+			// PORTC = ( (regArr[reg2]<< 4) | regArr[reg1]%16)%256;
+			PORTC = ((mux2out << 4) | regArr[reg1] % 16) % 256;
+			unsigned char dk = ALUop;
+			dk |= (((memWrite) << 3) | ((memRead) << 4) | ((memtoReg) << 5));
+ 20e:	e1 fa       	bst	r14, 1
+ 210:	44 24       	eor	r4, r4
+ 212:	40 f8       	bld	r4, 0
+ 214:	51 2c       	mov	r5, r1
+ 216:	d2 01       	movw	r26, r4
+ 218:	aa 0f       	add	r26, r26
+ 21a:	bb 1f       	adc	r27, r27
+ 21c:	a2 95       	swap	r26
+ 21e:	b2 95       	swap	r27
+ 220:	b0 7f       	andi	r27, 0xF0	; 240
+ 222:	ba 27       	eor	r27, r26
+ 224:	a0 7f       	andi	r26, 0xF0	; 240
+ 226:	ba 27       	eor	r27, r26
+ 228:	8a 2b       	or	r24, r26
+			PORTD = dk;
+ 22a:	82 bb       	out	0x12, r24	; 18
+			unsigned char b = regArr[reg2];
+ 22c:	20 58       	subi	r18, 0x80	; 128
+ 22e:	3d 4f       	sbci	r19, 0xFD	; 253
+			// PORTB4= b & (1);
+			PORTB = (b << 4);
+ 230:	d9 01       	movw	r26, r18
+ 232:	8c 91       	ld	r24, X
+ 234:	82 95       	swap	r24
+ 236:	80 7f       	andi	r24, 0xF0	; 240
+ 238:	88 bb       	out	0x18, r24	; 24
+
+			if (prevclk == 0 && currclk == 1 && regWrite)
+ 23a:	2d 85       	ldd	r18, Y+13	; 0x0d
+ 23c:	3e 85       	ldd	r19, Y+14	; 0x0e
+ 23e:	23 2b       	or	r18, r19
+ 240:	a1 f4       	brne	.+40     	; 0x26a <main+0x1d8>
+ 242:	61 30       	cpi	r22, 0x01	; 1
+ 244:	71 05       	cpc	r23, r1
+ 246:	89 f4       	brne	.+34     	; 0x26a <main+0x1d8>
+ 248:	e0 fe       	sbrs	r14, 0
+ 24a:	0f c0       	rjmp	.+30     	; 0x26a <main+0x1d8>
+			{
+				regArr[mux1out] = wb;
+ 24c:	2b 81       	ldd	r18, Y+3	; 0x03
+ 24e:	3c 81       	ldd	r19, Y+4	; 0x04
+ 250:	20 58       	subi	r18, 0x80	; 128
+ 252:	3d 4f       	sbci	r19, 0xFD	; 253
+		// char b = PINA;
+		unsigned char x = PINA;
+		currclk = (x & 0b00000001);
+		reset = (x & 0b00000010) >> 1;
+		unsigned int z = (x & 0b00000100) >> 2;
+		unsigned int wb = (x & 0b01111000) >> 3;
+ 254:	8f 2d       	mov	r24, r15
+ 256:	88 77       	andi	r24, 0x78	; 120
+ 258:	90 e0       	ldi	r25, 0x00	; 0
+ 25a:	95 95       	asr	r25
+ 25c:	87 95       	ror	r24
+ 25e:	95 95       	asr	r25
+ 260:	87 95       	ror	r24
+ 262:	95 95       	asr	r25
+ 264:	87 95       	ror	r24
+			// PORTB4= b & (1);
+			PORTB = (b << 4);
+
+			if (prevclk == 0 && currclk == 1 && regWrite)
+			{
+				regArr[mux1out] = wb;
+ 266:	d9 01       	movw	r26, r18
+ 268:	8c 93       	st	X, r24
+		unsigned int shmt = dstReg;
+		// shmt = (b & 0x0f);
+		unsigned int jmp_addr = 0;
+		jmp_addr = (instruc_no >> 4) & 0x0FF;
+		// int pc = a + 1;
+		if (reset == 1)
+ 26a:	31 97       	sbiw	r30, 0x01	; 1
+ 26c:	a9 f1       	breq	.+106    	; 0x2d8 <main+0x246>
+		{
+			pc = 0x00;
+		}
+		else
+		{
+			if (prevclk == 1 && currclk == 0)
+ 26e:	2d 85       	ldd	r18, Y+13	; 0x0d
+ 270:	3e 85       	ldd	r19, Y+14	; 0x0e
+ 272:	21 30       	cpi	r18, 0x01	; 1
+ 274:	31 05       	cpc	r19, r1
+ 276:	91 f5       	brne	.+100    	; 0x2dc <main+0x24a>
+ 278:	61 15       	cp	r22, r1
+ 27a:	71 05       	cpc	r23, r1
+ 27c:	79 f5       	brne	.+94     	; 0x2dc <main+0x24a>
+			{
+				if (jump == 1)
+ 27e:	40 ff       	sbrs	r20, 0
+ 280:	03 c0       	rjmp	.+6      	; 0x288 <main+0x1f6>
+		}
+		unsigned int beq = (bneq & (~z)) | (branch & z);
+		unsigned int shmt = dstReg;
+		// shmt = (b & 0x0f);
+		unsigned int jmp_addr = 0;
+		jmp_addr = (instruc_no >> 4) & 0x0FF;
+ 282:	38 01       	movw	r6, r16
+ 284:	77 24       	eor	r7, r7
+ 286:	2a c0       	rjmp	.+84     	; 0x2dc <main+0x24a>
+		prevclk = currclk;
+		// char b = PINA;
+		unsigned char x = PINA;
+		currclk = (x & 0b00000001);
+		reset = (x & 0b00000010) >> 1;
+		unsigned int z = (x & 0b00000100) >> 2;
+ 288:	f2 fa       	bst	r15, 2
+ 28a:	ff 24       	eor	r15, r15
+ 28c:	f0 f8       	bld	r15, 0
+ 28e:	fd 82       	std	Y+5, r15	; 0x05
+ 290:	1e 82       	std	Y+6, r1	; 0x06
+ 292:	44 fb       	bst	r20, 4
+ 294:	33 27       	eor	r19, r19
+ 296:	30 f9       	bld	r19, 0
+ 298:	3f 83       	std	Y+7, r19	; 0x07
+ 29a:	18 86       	std	Y+8, r1	; 0x08
+			{
+				regArr[mux1out] = wb;
+			}
+			//}
+		}
+		unsigned int beq = (bneq & (~z)) | (branch & z);
+ 29c:	8d 81       	ldd	r24, Y+5	; 0x05
+ 29e:	9e 81       	ldd	r25, Y+6	; 0x06
+ 2a0:	80 95       	com	r24
+ 2a2:	90 95       	com	r25
+ 2a4:	af 81       	ldd	r26, Y+7	; 0x07
+ 2a6:	b8 85       	ldd	r27, Y+8	; 0x08
+ 2a8:	8a 23       	and	r24, r26
+ 2aa:	9b 23       	and	r25, r27
+ 2ac:	45 fb       	bst	r20, 5
+ 2ae:	bb 27       	eor	r27, r27
+ 2b0:	b0 f9       	bld	r27, 0
+ 2b2:	b9 87       	std	Y+9, r27	; 0x09
+ 2b4:	1a 86       	std	Y+10, r1	; 0x0a
+ 2b6:	29 85       	ldd	r18, Y+9	; 0x09
+ 2b8:	3a 85       	ldd	r19, Y+10	; 0x0a
+ 2ba:	4d 81       	ldd	r20, Y+5	; 0x05
+ 2bc:	5e 81       	ldd	r21, Y+6	; 0x06
+ 2be:	24 23       	and	r18, r20
+ 2c0:	35 23       	and	r19, r21
+ 2c2:	82 2b       	or	r24, r18
+ 2c4:	93 2b       	or	r25, r19
+			{
+				if (jump == 1)
+				{
+					pc = jmp_addr;
+				}
+				else if (beq == 1)
+ 2c6:	01 97       	sbiw	r24, 0x01	; 1
+ 2c8:	19 f4       	brne	.+6      	; 0x2d0 <main+0x23e>
+				{
+					pc = pc + shmt;
+ 2ca:	68 0c       	add	r6, r8
+ 2cc:	79 1c       	adc	r7, r9
+ 2ce:	06 c0       	rjmp	.+12     	; 0x2dc <main+0x24a>
+				}
+				else
+				{
+					pc++;
+ 2d0:	5f ef       	ldi	r21, 0xFF	; 255
+ 2d2:	65 1a       	sub	r6, r21
+ 2d4:	75 0a       	sbc	r7, r21
+ 2d6:	02 c0       	rjmp	.+4      	; 0x2dc <main+0x24a>
+		unsigned int jmp_addr = 0;
+		jmp_addr = (instruc_no >> 4) & 0x0FF;
+		// int pc = a + 1;
+		if (reset == 1)
+		{
+			pc = 0x00;
+ 2d8:	61 2c       	mov	r6, r1
+ 2da:	71 2c       	mov	r7, r1
+ 2dc:	83 ec       	ldi	r24, 0xC3	; 195
+ 2de:	99 e0       	ldi	r25, 0x09	; 9
+ 2e0:	01 97       	sbiw	r24, 0x01	; 1
+ 2e2:	f1 f7       	brne	.-4      	; 0x2e0 <main+0x24e>
+ 2e4:	00 c0       	rjmp	.+0      	; 0x2e6 <main+0x254>
+ 2e6:	00 00       	nop
+	while (1)
+	{
+		prevclk = currclk;
+		// char b = PINA;
+		unsigned char x = PINA;
+		currclk = (x & 0b00000001);
+ 2e8:	7e 87       	std	Y+14, r23	; 0x0e
+ 2ea:	6d 87       	std	Y+13, r22	; 0x0d
+ 2ec:	fc ce       	rjmp	.-520    	; 0xe6 <main+0x54>
+
+000002ee <_exit>:
+ 2ee:	f8 94       	cli
+
+000002f0 <__stop_program>:
+ 2f0:	ff cf       	rjmp	.-2      	; 0x2f0 <__stop_program>
